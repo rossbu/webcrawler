@@ -12,6 +12,44 @@ spring:
   application:
     name: WebCrawler
   main:
-    banner-mode: log
+    banner-mode: off
 timeout: 4000
 followRedirects: true
+
+logging:
+  level:
+    com.commontools.http.webcrawler: 'info'
+    org.springframework: 'info'
+    org.apache.http: 'info'
+  file:
+    name: 'logs/${spring.application.name}.log'
+
+---
+spring:
+  profiles:
+    active: dev
+  jackson:
+    serialization.indent_output: true
+logging:
+  level:
+    com.commontools.http.webcrawler: 'debug'
+---
+spring:
+  profiles: test
+  jackson:
+    serialization.indent_output: true
+logging:
+  pattern:
+    file: '[%d{ISO8601}] [%thread] [%level] [%logger] [serviceName:${spring.application.name}] => %msg%n'
+  level:
+    com.commontools.http.webcrawler: 'debug'
+---
+
+spring:
+  profiles: production
+logging:
+  pattern:
+    file: '[%d{ISO8601}] [%thread] [%level] [%logger] [serviceName:${spring.application.name}] => %msg%n'
+  file:
+    name: 'logs/${spring.application.name}.log'
+  level: info
