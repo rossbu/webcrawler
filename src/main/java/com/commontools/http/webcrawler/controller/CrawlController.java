@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 /**
@@ -24,7 +25,7 @@ public class CrawlController {
     @Autowired
     CrawlService crawlService;
 
-    @GetMapping(value = "/crawl", produces = { MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "/crawl", produces = { MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<PageContext> crawl(
             @RequestParam(value = "url", required = false,defaultValue = "https://wiprodigital.com") String url,
             @RequestParam(value = "depth", required = false,defaultValue = "1") Integer depth,
