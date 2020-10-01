@@ -1,0 +1,17 @@
+security:
+  headers:
+    cache: false
+server:
+  port: 8080
+  servlet:
+    context-path: /webcrawler
+  error:
+    whitelabel:
+      enabled: false
+spring:
+  application:
+    name: WebCrawler
+  main:
+    banner-mode: log
+timeout: 4000
+followRedirects: true
