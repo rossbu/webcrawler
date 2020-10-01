@@ -1,0 +1,36 @@
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+
+# eclipse
+.classpath
+.project
+.settings/
+
+# idea
+.idea/
+*.iml
+*.iws
+
+# STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+#generated
+bin/
+build/
+target/
+*.log
+.class
+logs/
+.DS_Store
+
+
