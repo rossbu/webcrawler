@@ -14,8 +14,12 @@
 1. Make sure you have `Maven 3.5+` installed. See instructions [here](https://maven.apache.org/download.cgi).
 1. Make sure you have `Postman` installed ( Testing ). See instructions [here](https://www.postman.com/).
 
+## JDK Version
+    If you use jdk11 or higher on your test machine, please update <java.version>1.8</java.version> to <java.version>11</java.version> or highter in pom file.
+    This project was tested on JDK8 and JDK11 successfully.
 
 ## Build
+
     With Maven (3.5+)
         mvn clean install
         
@@ -30,19 +34,18 @@
     
 ## Testing
 
-### Start Web Server     
+### Start Web Server
     CLI : 
         mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=8080 , --customArgument=--timeout=3000 --followRedirects=true"
-    
+        or
+        mvn package && java -jar target/webcrawler-1.0.0-SNAPSHOT.jar
     IDE:  
         Open WebcrawlerApplication.java, Run as Spring boot Application 
-
-    Web Server will be running on 8080 porthttp://localhost:8080/webcrawler/
-    Note: if you use jdk11 or higher, please update <java.version>1.8</java.version> to <java.version>11</java.version> in pom file.
- 
+    
+    - Web Server will be running on http://localhost:8080/webcrawler/
+    - Open http://localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=1 in your browser, a json response should be displayed.
 
 ### Settings
-  ```
     Request Params  ( for http request)
         flat  :  When true , return flat data hierarchy.  when false, return response in a hierarchical way
         depth :  
@@ -59,8 +62,6 @@
         followRedirects  : default true, keep it true to comply with web server|gateway redirection.
         ignoreHttpErrors : default true, change to false only if logging errors is needed, but will be lengthy when throw exceptions 
                            when a HTTP error occurs. (4xx - 5xx, e.g. 404 or 500)
-  ```
-
 ### Crawl w3schools.com
     postman ( perferred) :
             please download the postman collection for testing [Postman-WebCrawler.json]
@@ -69,7 +70,7 @@
             curl -H "Content-Type: application/json" 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2' | jq '.'
             
             - show domain links  (w3schools.com)
-            curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=1' | jq '.hrefContext.domainLinks'
+            curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=1' | jq '.hrefContext.domainLinks'
             
             - show external links ( not including 'mailto' and 'javascript:void..)              
             curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=1' | jq '.hrefContext.externalLinks'
@@ -93,12 +94,11 @@
  
 
 ## To Be Enhanced
-
-      * multi-sites
-      * multi-threads (multi-cpus)
-      * queued requests
-      * dynamic pages generation
-      * distributed: run on several machines in a distributed manner.
+    * web security && more errors handling
+    * multi-sites crawling
+    * multi-threads (multi-cpus)
+    * queued requests
+    * distributed: run on several nodes in a distributed manner.
 
 ## Additional Notes
     What is jq?
