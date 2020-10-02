@@ -37,8 +37,13 @@ public class PageContext {
     @JsonProperty("url")
     private String url;
 
+    @NonNull
     @JsonProperty("title")
     private String title;
+
+    public PageContext(String url) {
+        this.url = url;
+    }
     public void addPageContext(final PageContext pageContext) {
         if (pageContexts == null) {
             pageContexts = new ArrayList<>();

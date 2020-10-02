@@ -2,11 +2,15 @@ package com.commontools.http.webcrawler;
 
 import com.commontools.http.webcrawler.pojo.HREFContext;
 import com.commontools.http.webcrawler.pojo.WebResponse;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,13 +26,23 @@ class WebcrawlerApplicationTests {
 	@Autowired
 	private TestRestTemplate testRestTemplate;
 
+	@BeforeEach
+	public void setUp(){
+		testRestTemplate.getRestTemplate().setInterceptors(
+				Collections.singletonList((request, body, execution) -> {
+					request.getHeaders()
+							.add("Accept", "application/json");
+					return execution.execute(request, body);
+				}));
+	}
+
 	@Test
 	void when_flat_true_expect_hrefContext_to_return() {
 		WebResponse webResponse = testRestTemplate.getForObject("http://localhost:" + port + "/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=1", WebResponse.class);
 		assertThat(webResponse).isNotNull().satisfies(
 				response -> {
-					assertThat(response.getHrefContext()!=null);
 					assertThat(response.getPageContext()==null);
+					assertThat(response.getHrefContext()!=null);
 				}
 		);
 	}

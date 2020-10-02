@@ -11,13 +11,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 /**
  *
  * @author tbu
  */
-@Controller
+@RestController
 @Slf4j
 public class CrawlController {
 
@@ -26,7 +27,7 @@ public class CrawlController {
 
     @GetMapping(value = "/crawl", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<PageContext> crawl(
-            @RequestParam(value = "url", required = false, defaultValue = "https://wiprodigital.com") String url,
+            @RequestParam(value = "url", required = true) String url,
             @RequestParam(value = "depth", required = false, defaultValue = "1") Integer depth,
             @RequestParam(value = "flat", required = false, defaultValue = "true") Boolean flat) {
         WebResponse webResponse = crawlService.visit(url, depth, flat);
