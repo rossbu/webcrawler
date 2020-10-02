@@ -108,11 +108,11 @@ This section shows you step-by-step to start the web server, config params, and 
     chrome:
             open http://localhost:8888/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2
 
-### Response
-    Response Type:
-
+### Response Type
+        Current version return one or more below :
+        
         domainLinks :  the link to the same domain
-        externallinks: the link to other website other than the domain
+        externallinks: the link to other website
         mailto:        a[href] also can be used as 'mailto'
         javascript:    javascript can be use as a[href]. but few.
          
