@@ -1,22 +1,29 @@
 # Web Crawler
 
 ## Table of content
-- [Installation](#installation)
+- [Prerequisite](#prerequisite)
+- [Quick Start](#quick-start)
 - [Build](#build)
 - [Testing](#testing)
 - [To Be Enhanced](#to-be-enhanced)
 - [Additional Notes](#additional-notes)
 
-## Installation
+## Prerequisite
 1. If you haven't done it already, [make a fork of this repo](http://github.com/rossbu/webcrawler/fork).
 1. Clone to your local computer using `git`.
 1. Make sure you have `JDK 1.8` installed, see instructions [here](https://www.java.com/en/download/).
+    1. If you have jdk11 or higher in use on your machine, please update <java.version>1.8</java.version> to <java.version>11</java.version> or highter in pom file. 
+    1. This crawler was tested on JDK8 and JDK11.
 1. Make sure you have `Maven 3.5+` installed. See instructions [here](https://maven.apache.org/download.cgi).
 1. Make sure you have `Postman` installed ( Testing ). See instructions [here](https://www.postman.com/).
 
-## JDK Version
-    If you use jdk11 or higher on your test machine, please update <java.version>1.8</java.version> to <java.version>11</java.version> or highter in pom file.
-    This project was tested on JDK8 and JDK11 successfully.
+
+ 
+## Quick Start
+If you would like to try the crawler quickly before step-by-step setup, you can use docker as below:
+    
+    docker run -e "SPRING_PROFILES_ACTIVE=dev" -p 8080:8080 -t rossbu/webcrawler
+    Open http://localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=1 in your browser
 
 ## Build
 
@@ -31,8 +38,9 @@
     ...
     Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
     BUILD SUCCESS
-    
+
 ## Testing
+This section shows you step-by-step to start the web server, config params, and crawl web sites. if you want to simply run the server, check above.
 
 ### Start Web Server
     CLI : 
@@ -79,8 +87,6 @@
             - Install chrome ext: 'JSONView' to parse Json in your browser.
             open http://localhost:8888/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2
             
-
-
 ### Crawl wiprodigital.com
     postman ( perferred) :
         please download the postman collection for testing [Postman-WebCrawler.json]
@@ -91,7 +97,6 @@
     chrome:    
         open http://localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=2
 
- 
 
 ## To Be Enhanced
     * web security && more errors handling
