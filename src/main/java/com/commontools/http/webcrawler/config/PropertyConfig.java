@@ -20,5 +20,10 @@ public class PropertyConfig {
     @Value("${timeout}")
     public Integer timeout;
 
+    @Value("${ignoreHttpErrors}")
+    public Boolean ignoreHttpErrors;
+
+    @Value("${maxBodySize}")
+    public Integer maxBodySize;
 
 }

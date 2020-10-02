@@ -13,8 +13,6 @@ spring:
     name: WebCrawler
   main:
     banner-mode: off
-timeout: 4000
-followRedirects: true
 
 logging:
   level:
@@ -23,6 +21,12 @@ logging:
     org.apache.http: 'info'
   file:
     name: 'logs/${spring.application.name}.log'
+
+
+timeout: 4000
+followRedirects: true
+ignoreHttpErrors: true
+maxBodySize: 0
 
 ---
 spring:
