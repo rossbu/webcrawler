@@ -1,0 +1,342 @@
+{
+	"info": {
+		"_postman_id": "9eb73907-b49e-401f-a825-bfb69a9e84db",
+		"name": "Postman-WebCrawler",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "w3school",
+			"item": [
+				{
+					"name": "w3school-xml-flat",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"webcrawler",
+								"crawl"
+							],
+							"query": [
+								{
+									"key": "flat",
+									"value": "true"
+								},
+								{
+									"key": "url",
+									"value": "https://www.w3schools.com"
+								},
+								{
+									"key": "depth",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "w3school-json-flat",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"webcrawler",
+								"crawl"
+							],
+							"query": [
+								{
+									"key": "flat",
+									"value": "true"
+								},
+								{
+									"key": "url",
+									"value": "https://www.w3schools.com"
+								},
+								{
+									"key": "depth",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "w3school-xml-hierarchy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/xml"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/webcrawler/crawl?flat=false&url=https://www.w3schools.com&depth=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"webcrawler",
+								"crawl"
+							],
+							"query": [
+								{
+									"key": "flat",
+									"value": "false"
+								},
+								{
+									"key": "url",
+									"value": "https://www.w3schools.com"
+								},
+								{
+									"key": "depth",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "w3school-json-hierarchy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/webcrawler/crawl?flat=false&url=https://www.w3schools.com&depth=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"webcrawler",
+								"crawl"
+							],
+							"query": [
+								{
+									"key": "flat",
+									"value": "false"
+								},
+								{
+									"key": "url",
+									"value": "https://www.w3schools.com"
+								},
+								{
+									"key": "depth",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "wiprodigital",
+			"item": [
+				{
+					"name": "wiprodigital-xml-flat",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/webcrawler/crawl?flat=true&url=http://wiprodigital.com&depth=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"webcrawler",
+								"crawl"
+							],
+							"query": [
+								{
+									"key": "flat",
+									"value": "true"
+								},
+								{
+									"key": "url",
+									"value": "http://wiprodigital.com"
+								},
+								{
+									"key": "depth",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "wiprodigital-json-flat",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/webcrawler/crawl?flat=true&url=http://wiprodigital.com&depth=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"webcrawler",
+								"crawl"
+							],
+							"query": [
+								{
+									"key": "flat",
+									"value": "true"
+								},
+								{
+									"key": "url",
+									"value": "http://wiprodigital.com"
+								},
+								{
+									"key": "depth",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "wiprodigital-xml-hierarchy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/xml"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/webcrawler/crawl?flat=false&url=http://wiprodigital.com&depth=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"webcrawler",
+								"crawl"
+							],
+							"query": [
+								{
+									"key": "flat",
+									"value": "false"
+								},
+								{
+									"key": "url",
+									"value": "http://wiprodigital.com"
+								},
+								{
+									"key": "depth",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "wiprodigital-json-hierarchy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/webcrawler/crawl?flat=false&url=http://wiprodigital.com&depth=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"webcrawler",
+								"crawl"
+							],
+							"query": [
+								{
+									"key": "flat",
+									"value": "false"
+								},
+								{
+									"key": "url",
+									"value": "http://wiprodigital.com"
+								},
+								{
+									"key": "depth",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
