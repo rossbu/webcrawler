@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
@@ -82,18 +83,23 @@ public class CrawlServiceImpl implements CrawlService{
         return webResponse;
     }
     /**
-     * Flatten all hierarchical nodes In PageContext into HrefContext recursively
+     * Flatten all hierarchical nodes In PageContext recursively
      * @param pageContext   holds the 'current' page meta data
      * @param hrefContext holds all links of pages.
      */
     private void flatten(PageContext pageContext, HREFContext hrefContext) {
-        if (pageContext == null || pageContext.getPageContexts() == null || pageContext.getPageContexts().size() == 0)
+        if (pageContext == null || pageContext.getPageContexts() == null)
             return;
+        Optional.ofNullable(pageContext.getDomainLinks()).ifPresent(hrefContext.getDomainLinks()::addAll);
+        Optional.ofNullable(pageContext.getExternalLinks()).ifPresent(hrefContext.getExternalLinks()::addAll);
+        Optional.ofNullable(pageContext.getMailTos()).ifPresent(hrefContext.getMailTos()::addAll);
+        Optional.ofNullable(pageContext.getJavascriptLinks()).ifPresent(hrefContext.getJavascriptLinks()::addAll);
+
         pageContext.getPageContexts().forEach(p -> {
-            if (p.getDomainLinks() != null) hrefContext.getDomainLinks().addAll(p.getDomainLinks());
-            if (p.getExternalLinks() != null) hrefContext.getExternalLinks().addAll(p.getExternalLinks());
-            if (p.getMailTos() != null) hrefContext.getMailTos().addAll(p.getMailTos());
-            if (p.getJavascriptLinks() != null) hrefContext.getJavascriptLinks().addAll(p.getJavascriptLinks());
+            Optional.ofNullable(p.getDomainLinks()).ifPresent(hrefContext.getDomainLinks()::addAll);
+            Optional.ofNullable(p.getExternalLinks()).ifPresent(hrefContext.getExternalLinks()::addAll);
+            Optional.ofNullable(p.getMailTos()).ifPresent(hrefContext.getMailTos()::addAll);
+            Optional.ofNullable(p.getJavascriptLinks()).ifPresent(hrefContext.getJavascriptLinks()::addAll);
             flatten(p, hrefContext);
         });
     }
@@ -110,7 +116,7 @@ public class CrawlServiceImpl implements CrawlService{
         Page page = connect(url);
         if (page == null) return null;
         Elements elements = page.getElements();
-        log.info("{} links for url : {}", elements.size(), url);
+        log.info("{} links on url : {}", elements.size(), url);
         Supplier<Stream<Element>> elementsSupplier = () -> elements.stream();
         PageContext pageContext = new PageContext(url);
         pageContext.setTitle(page.getTitle());
@@ -183,6 +189,7 @@ public class CrawlServiceImpl implements CrawlService{
         if (visitedUrls.add(url)) {
             try {
                 Document doc = Jsoup.connect(url)
+                        .maxBodySize(propertyConfig.getMaxBodySize())
                         .ignoreHttpErrors(true)
                         .timeout(propertyConfig.getTimeout())
                         .followRedirects(propertyConfig.getFollowRedirects())

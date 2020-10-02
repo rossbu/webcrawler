@@ -36,11 +36,7 @@ public class PageContext {
     @NonNull
     @JsonProperty("url")
     private String url;
-    public PageContext(String url) {
-        this.url = url;
-    }
 
-    @NonNull
     @JsonProperty("title")
     private String title;
     public void addPageContext(final PageContext pageContext) {
