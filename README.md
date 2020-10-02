@@ -69,7 +69,7 @@ This section shows you step-by-step to start the web server, config params, and 
         followRedirects  : default true, keep it true to comply with web server|gateway redirection.
         ignoreHttpErrors : default true, change to false only if logging errors is needed, but will be lengthy when throw exceptions 
                            when a HTTP error occurs. (4xx - 5xx, e.g. 404 or 500)
-            
+         
 ### Crawl wiprodigital.com
     postman ( perferred) :
         download postman collection under project folder [Postman-WebCrawler.json]
@@ -108,12 +108,20 @@ This section shows you step-by-step to start the web server, config params, and 
     chrome:
             open http://localhost:8888/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2
 
-## To Be Enhanced
-    * web security && more errors handling
+### Response
+    Response Type:
+
+        domainLinks :  the link to the same domain
+        externallinks: the link to other website other than the domain
+        mailto:        a[href] also can be used as 'mailto'
+        javascript:    javascript can be use as a[href]. but few.
+         
+## To Be Enhanced 
+    * web security && more errors handling & vailidations
     * multi-sites crawling
     * multi-threads (multi-cpus)
     * queued requests
-    * distributed: run on several nodes in a distributed manner.
+    * distributed: can be deployed on multi-nodes in a distributed manner.
 
 ## Additional Notes
     What is jq?
