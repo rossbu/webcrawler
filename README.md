@@ -40,7 +40,7 @@ If you would like to try the crawler quickly before step-by-step setup, you can 
     BUILD SUCCESS
 
 ## Testing
-This section shows you step-by-step to start the web server, config params, and crawl web sites. if you want to simply run the server, check above.
+This section shows you step-by-step to start the web server, config params, and crawl web sites.
 
 ### Start Web Server
     CLI : 
@@ -70,26 +70,11 @@ This section shows you step-by-step to start the web server, config params, and 
         followRedirects  : default true, keep it true to comply with web server|gateway redirection.
         ignoreHttpErrors : default true, change to false only if logging errors is needed, but will be lengthy when throw exceptions 
                            when a HTTP error occurs. (4xx - 5xx, e.g. 404 or 500)
-### Crawl w3schools.com
-    postman ( perferred) :
-            please download the postman collection for testing [Postman-WebCrawler.json]
-    curl  :    
-            - return all:
-            curl -H "Content-Type: application/json" 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2' | jq '.'
-            
-            - show domain links  (w3schools.com)
-            curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=1' | jq '.hrefContext.domainLinks'
-            
-            - show external links ( not including 'mailto' and 'javascript:void..)              
-            curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=1' | jq '.hrefContext.externalLinks'
-    
-    chrome:
-            - Install chrome ext: 'JSONView' to parse Json in your browser.
-            open http://localhost:8888/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2
+
             
 ### Crawl wiprodigital.com
     postman ( perferred) :
-        please download the postman collection for testing [Postman-WebCrawler.json]
+        please download postman collection in sourcecode [Postman-WebCrawler.json]
         
     curl  :    
         curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=1' | jq '.'
@@ -97,7 +82,24 @@ This section shows you step-by-step to start the web server, config params, and 
     chrome:    
         open http://localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=2
 
-
+### Crawl w3schools.com
+    postman ( perferred) :
+       please download postman collection in sourcecode [Postman-WebCrawler.json]
+       
+    curl  :    
+        - return all:
+        curl -H "Content-Type: application/json" 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2' | jq '.'
+            
+        - show domain links  (w3schools.com)
+        curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=1' | jq '.hrefContext.domainLinks'
+            
+        - show external links ( not including 'mailto' and 'javascript:void..)              
+        curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=1' | jq '.hrefContext.externalLinks'
+    
+    chrome:
+            - Install chrome ext: 'JSONView' to parse Json in your browser.
+            open http://localhost:8888/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2
+            
 ## To Be Enhanced
     * web security && more errors handling
     * multi-sites crawling
