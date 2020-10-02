@@ -12,8 +12,8 @@
 1. If you haven't done it already, [make a fork of this repo](http://github.com/rossbu/webcrawler/fork).
 1. Clone to your local computer using `git`.
 1. Make sure you have `JDK 1.8` installed, see instructions [here](https://www.java.com/en/download/).
-    1. If you have jdk11 or higher in use on your machine, please update <java.version>1.8</java.version> to <java.version>11</java.version> or highter in pom file. 
-    1. This crawler was tested on JDK8 and JDK11.
+    1. If you have jdk11 or higher in use on your machine, please update <java.version>1.8</java.version> to <java.version>11</java.version> or higher in pom file. 
+    1. JDK8 and JDK11 were both tested.
 1. Make sure you have `Maven 3.5+` installed. See instructions [here](https://maven.apache.org/download.cgi).
 1. Make sure you have `Postman` installed ( Testing ). See instructions [here](https://www.postman.com/).
 
