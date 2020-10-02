@@ -30,7 +30,13 @@ public class CrawlController {
             @RequestParam(value = "url", required = true) String url,
             @RequestParam(value = "depth", required = false, defaultValue = "1") Integer depth,
             @RequestParam(value = "flat", required = false, defaultValue = "true") Boolean flat) {
-        WebResponse webResponse = crawlService.visit(url, depth, flat);
-        return new ResponseEntity(webResponse, HttpStatus.OK);
+        WebResponse webResponse = new WebResponse();
+        if (depth>5){
+            webResponse.setErrorMessage("depth should be < 6");
+            return new ResponseEntity(webResponse, HttpStatus.BAD_GATEWAY);
+        } else {
+            webResponse = crawlService.visit(url, depth, flat);
+            return new ResponseEntity(webResponse, HttpStatus.OK);
+        }
     }
 }

@@ -60,8 +60,7 @@ This section shows you step-by-step to start the web server, config params, and 
                  <=0 won't trigger crawling,  
                  1  : home page, 
                  2+ : subpages (of home page) 
-                 6 : maximum ( Not to hack 3rd party website when crawling when using this service. 
-                    take w3school for example: depth=6 means 1M for only links)
+                 6 : maximum 
         url  :   the website for crawling e.g. http://wiprodigital.com
   
     External Config  ( add below '--customArgument' in the mvn command )
@@ -70,36 +69,45 @@ This section shows you step-by-step to start the web server, config params, and 
         followRedirects  : default true, keep it true to comply with web server|gateway redirection.
         ignoreHttpErrors : default true, change to false only if logging errors is needed, but will be lengthy when throw exceptions 
                            when a HTTP error occurs. (4xx - 5xx, e.g. 404 or 500)
-
             
 ### Crawl wiprodigital.com
     postman ( perferred) :
-        please download postman collection in sourcecode [Postman-WebCrawler.json]
+        download postman collection under project folder [Postman-WebCrawler.json]
         
     curl  :    
-        curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=1' | jq '.'
-    
+        - show all:
+        curl -H "Accept: application/json" 'localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=1' | jq '.'
+
+        - show domain links  (w3schools.com)
+        curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=1' | jq '.hrefContext.domainLinks'
+        
+       - show external links ( not including 'mailto' and 'javascript:void..)              
+        curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=1' | jq '.hrefContext.externalLinks'
+                
+        -H "Accept: application/xml"       return xml view
+        -H "Accept: application/json"      return json view
+        
     chrome:    
+        Install chrome extension: 'JSONView' to parse Json in your browser.
         open http://localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=2
 
 ### Crawl w3schools.com
     postman ( perferred) :
-       please download postman collection in sourcecode [Postman-WebCrawler.json]
+        download postman collection under project folder [Postman-WebCrawler.json]
        
     curl  :    
-        - return all:
-        curl -H "Content-Type: application/json" 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2' | jq '.'
+        - show all:
+        curl -H "Accept: application/json" 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2' | jq '.'
             
         - show domain links  (w3schools.com)
-        curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=1' | jq '.hrefContext.domainLinks'
+        curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=1' | jq '.hrefContext.domainLinks'
             
         - show external links ( not including 'mailto' and 'javascript:void..)              
         curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=1' | jq '.hrefContext.externalLinks'
-    
+
     chrome:
-            - Install chrome ext: 'JSONView' to parse Json in your browser.
             open http://localhost:8888/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2
-            
+
 ## To Be Enhanced
     * web security && more errors handling
     * multi-sites crawling

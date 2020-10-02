@@ -14,4 +14,6 @@ public class WebResponse {
     HREFContext hrefContext;
 
     PageContext pageContext;
+
+    String errorMessage;
 }
