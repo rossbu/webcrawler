@@ -4,13 +4,13 @@
 - [Installation](#installation)
 - [Build](#build)
 - [Testing](#testing)
-- [To Be Enhanced](#To Be Enhanced)
-- [Additional Notes](#Additional Notes)
+- [To Be Enhanced](#to-be-enhanced)
+- [Additional Notes](#additional-notes)
 
 ## Installation
 1. If you haven't done it already, [make a fork of this repo](http://github.com/rossbu/webcrawler/fork).
 1. Clone to your local computer using `git`.
-1. Make sure you have `JDK 1.8+` installed, see instructions [here](https://www.java.com/en/download/).
+1. Make sure you have `JDK 1.8` installed, see instructions [here](https://www.java.com/en/download/).
 1. Make sure you have `Maven 3.5+` installed. See instructions [here](https://maven.apache.org/download.cgi).
 1. Make sure you have `Postman` installed ( Testing ). See instructions [here](https://www.postman.com/).
 
@@ -30,8 +30,16 @@
     
 ## Testing
 
-### start web server
-    mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=8080 , --customArgument=--timeout=3000 --followRedirects=true"
+### Start Web Server     
+    CLI : 
+        mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=8080 , --customArgument=--timeout=3000 --followRedirects=true"
+    
+    IDE:  
+        Open WebcrawlerApplication.java, Run as Spring boot Application 
+
+    Web Server will be running on 8080 porthttp://localhost:8080/webcrawler/
+    Note: if you use jdk11 or higher, please update <java.version>1.8</java.version> to <java.version>11</java.version> in pom file.
+ 
 
 ### Settings
   ```
@@ -45,42 +53,52 @@
                     take w3school for example: depth=6 means 1M for only links)
         url  :   the website for crawling e.g. http://wiprodigital.com
   
-    External Config  ( for developers only )
+    External Config  ( add below '--customArgument' in the mvn command )
         server.port      : default 8080, change to another port if conflicts in your local.
         timeout          : default 3000, increase timeout if network lag occurs. ( millisecond)
         followRedirects  : default true, keep it true to comply with web server|gateway redirection.
         ignoreHttpErrors : default true, change to false only if logging errors is needed, but will be lengthy when throw exceptions 
                            when a HTTP error occurs. (4xx - 5xx, e.g. 404 or 500)
-    
   ```
 
-### TC1: w3schools.com
-
-    chrome:    
-            open http://localhost:8888/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2
-    curl  :    
-            curl -H "Content-Type: application/json" 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=1' | jq '.'              -- return all
-            curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=1' | jq '.domainLinks'   -- return domainlinks only
-            curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=1' | jq '.externalLinks' -- return externalLinks Only
-    
+### Crawl w3schools.com
     postman ( perferred) :
-            please download the powman collection for testing this project.
+            please download the postman collection for testing [Postman-WebCrawler.json]
+    curl  :    
+            - return all:
+            curl -H "Content-Type: application/json" 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2' | jq '.'
+            
+            - show domain links  (w3schools.com)
+            curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=1' | jq '.hrefContext.domainLinks'
+            
+            - show external links ( not including 'mailto' and 'javascript:void..)              
+            curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=1' | jq '.hrefContext.externalLinks'
+    
+    chrome:
+            - Install chrome ext: 'JSONView' to parse Json in your browser.
+            open http://localhost:8888/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2
+            
 
-### TC2: crawl wiprodigital.com
 
-    chrome:    
-        open http://localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=2 in 
+### Crawl wiprodigital.com
+    postman ( perferred) :
+        please download the postman collection for testing [Postman-WebCrawler.json]
+        
     curl  :    
         curl 'localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=1' | jq '.'
-    postman ( perferred) :
-        
+    
+    chrome:    
+        open http://localhost:8080/webcrawler/crawl?flat=true&url=https://wiprodigital.com&depth=2
+
+ 
 
 ## To Be Enhanced
-  * multi-sites
-  * multi-threads (multi-cpus)
-  * queued requests
-  * dynamic pages generation
-  * distributed: run on several machines in a distributed manner.
+
+      * multi-sites
+      * multi-threads (multi-cpus)
+      * queued requests
+      * dynamic pages generation
+      * distributed: run on several machines in a distributed manner.
 
 ## Additional Notes
     What is jq?
