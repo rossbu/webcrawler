@@ -27,17 +27,26 @@ If you would like to try the crawler quickly before step-by-step setup, you can 
 
 ## Build
 
-    With Maven (3.5+)
-        mvn clean install
-        
-    W/O Maven
-        ./mvnw  clean install
-
-    Both will execute test cases and make the build and if the maven command runs properly, you should see below output
+    Maven Build
+        With Maven (3.5+)
+            mvn clean install
+            
+        W/O Maven
+            ./mvnw  clean install
     
-    ...
-    Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
-    BUILD SUCCESS
+        Both will execute test cases and make the build and if the maven command runs properly, you should see below output
+        
+        ...
+        Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+        BUILD SUCCESS
+    
+    Docker Build
+        old way: 
+            docker build -t rossbu/webcrawler .  -- and you need to have Dockerfile first.
+        
+        new way:  ( no need to have dockerfile or dockercompose )
+            ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=rossbu/webcrawler
+    
 
 ## Testing
 This section shows you step-by-step to start the web server, config params, and crawl web sites.
@@ -109,10 +118,10 @@ This section shows you step-by-step to start the web server, config params, and 
             open http://localhost:8888/webcrawler/crawl?flat=true&url=https://www.w3schools.com&depth=2
 
 ### Response Type
-        Current version return one or more below :
+        Current version supports one or more below :
         
-        domainLinks :  the link to the same domain
-        externallinks: the link to other website
+        domainLinks :  links to the same domain
+        externallinks: links to external websites
         mailto:        a[href] also can be used as 'mailto'
         javascript:    javascript can be use as a[href]. but few.
          
@@ -133,3 +142,11 @@ This section shows you step-by-step to start the web server, config params, and 
 
     How to kill 8080 port ( if the port is still listening|Established|Close_wait After IDE closed )
     netstat -anvp tcp | awk 'NR<3 || /LISTEN/' -> find pid -> kill the pid
+    
+    Why fails to authenticate when pushing docker image
+    logout then login , push again should fix this known issue.
+
+## Reference
+[Spring Boot with Docker](https://spring.io/guides/gs/spring-boot-docker/)
+[Jsoup working with URLs](https://jsoup.org/cookbook/extracting-data/working-with-urls)
+
