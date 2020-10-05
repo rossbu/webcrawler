@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Import;
 public class WebcrawlerApplication {
 
 	public static void main(String[] args) {
-		log.debug("Runtime processors: "+ Runtime.getRuntime().availableProcessors());
+		log.debug("Runtime processors: "+ Runtime.getRuntime().availableProcessors()); // by default, forked joined will use 1 less than processors
 		SpringApplication.run(WebcrawlerApplication.class, args);
 	}
 
