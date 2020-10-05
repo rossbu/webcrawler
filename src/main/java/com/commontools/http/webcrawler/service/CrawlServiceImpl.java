@@ -26,12 +26,16 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+import org.springframework.context.annotation.Scope;
+
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
 /**
  * The main service responsible for crawling the pages and collect Href information
  * @author tbu
  */
 @Service
+@Scope(SCOPE_PROTOTYPE)
 @Slf4j
 @Getter
 @Setter
@@ -117,7 +121,7 @@ public class CrawlServiceImpl implements CrawlService{
         if (page == null) return null;
         Elements elements = page.getElements();
         log.info("{} links on url : {}", elements.size(), url);
-        Supplier<Stream<Element>> elementsSupplier = () -> elements.stream();
+        Supplier<Stream<Element>> elementsSupplier = () -> elements.parallelStream();
         PageContext pageContext = new PageContext(url);
         pageContext.setTitle(page.getTitle());
 
@@ -170,6 +174,7 @@ public class CrawlServiceImpl implements CrawlService{
                 .filter(isDomainLink)
                 .map(element -> element.attr(ABOSOLUTE_HREF))
                 .forEach(link -> {
+                    log.info(Thread.currentThread().getName());
                     pageContext.addDomainLinks(link);
                     pageContext.addPageContext(visit(link, depth - 1));
                 });
