@@ -179,7 +179,7 @@ public class CrawlServiceImpl implements CrawlService {
                 .filter(isDomainLink)
                 .map(element -> element.attr(ABOSOLUTE_HREF))
                 .forEach(link -> {
-//                    log.info(Thread.currentThread().getName()); // log thread name
+                    log.debug(Thread.currentThread().getName()); // log thread name
                     pageContext.addDomainLinks(link);
                     pageContext.addPageContext(visit(link, depth - 1, visitedUrls));
                 });

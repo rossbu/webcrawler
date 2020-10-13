@@ -7,6 +7,7 @@
 - [Testing](#testing)
 - [To Be Enhanced](#to-be-enhanced)
 - [Additional Notes](#additional-notes)
+- [Reference](#reference)
 
 ## Prerequisite
 1. If you haven't done it already, [make a fork of this repo](http://github.com/rossbu/webcrawler/fork).
@@ -147,6 +148,8 @@ This section shows you step-by-step to start the web server, config params, and 
     logout then login , push again should fix this known issue.
 
 ## Reference
-[Spring Boot with Docker](https://spring.io/guides/gs/spring-boot-docker/)
-[Jsoup working with URLs](https://jsoup.org/cookbook/extracting-data/working-with-urls)
-
+- [Spring Boot with Docker](https://spring.io/guides/gs/spring-boot-docker/)
+- [Creating Optimized Images](https://reflectoring.io/spring-boot-docker/)
+- [Dive Tools](https://github.com/wagoodman/dive)
+- [Buildpack](https://buildpacks.io/)
+- [Jsoup working with URLs](https://jsoup.org/cookbook/extracting-data/working-with-urls)
