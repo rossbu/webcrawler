@@ -17,6 +17,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+/**
+ * @author tbu
+ */
 public class Http1Crawling {
 
     static ExecutorService executor = Executors.newFixedThreadPool(6, (Runnable r) -> {
@@ -24,7 +27,6 @@ public class Http1Crawling {
     });
 
     public static void main(String[] args) throws Exception {
-
         downloadWithExecutorServices();
 //        downloadWithCompletableFutureSupplyAsync();
     }
