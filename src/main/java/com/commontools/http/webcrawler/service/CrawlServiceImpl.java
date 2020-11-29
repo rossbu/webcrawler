@@ -27,15 +27,21 @@ import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import org.springframework.context.annotation.Scope;
+
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
+
 /**
  * The main service responsible for crawling the pages and collect Href information
+ *
  * @author tbu
  */
 @Service
+//@Scope(SCOPE_PROTOTYPE)
 @Slf4j
 @Getter
 @Setter
-public class CrawlServiceImpl implements CrawlService{
+public class CrawlServiceImpl implements CrawlService {
 
     @Autowired
     PropertyConfig propertyConfig;
@@ -52,17 +58,17 @@ public class CrawlServiceImpl implements CrawlService{
             "|xml|txt|java|c|cpp|exe" +
             "))$");
 
-    private HashSet<String> visitedUrls;
-    private HashSet<String> domainLinks ;
-    private HashSet<String> externalLinks ;
-    private HashSet<String> mailTos ;
-    private HashSet<String> javascriptLinks ;
 
     @Override
     public WebResponse visit(String url, int depth, boolean flat) {
         WebResponse webResponse = new WebResponse();
+        HashSet<String> visitedUrls;
         visitedUrls = new HashSet();
-        PageContext pageContext = visit(url, depth);
+        HashSet<String> domainLinks;
+        HashSet<String> externalLinks;
+        HashSet<String> mailTos;
+        HashSet<String> javascriptLinks;
+        PageContext pageContext = visit(url, depth,visitedUrls);
 
         if (flat) {  // flat output
             HREFContext hrefContext = new HREFContext();
@@ -74,7 +80,7 @@ public class CrawlServiceImpl implements CrawlService{
             hrefContext.setExternalLinks(externalLinks);
             hrefContext.setMailTos(mailTos);
             hrefContext.setJavascriptLinks(javascriptLinks);
-            flatten(pageContext,hrefContext);
+            flatten(pageContext, hrefContext);
             webResponse.setHrefContext(hrefContext);
         } else { // hierarchy output
             webResponse.setPageContext(pageContext);
@@ -82,9 +88,11 @@ public class CrawlServiceImpl implements CrawlService{
 
         return webResponse;
     }
+
     /**
      * Flatten all hierarchical nodes In PageContext recursively
-     * @param pageContext   holds the 'current' page meta data
+     *
+     * @param pageContext holds the 'current' page meta data
      * @param hrefContext holds all links of pages.
      */
     private void flatten(PageContext pageContext, HREFContext hrefContext) {
@@ -105,19 +113,20 @@ public class CrawlServiceImpl implements CrawlService{
     }
 
     /**
-     *
      * @param url
      * @param depth
      * @return
      */
-    public PageContext visit(String url, int depth) {
+    public PageContext visit(String url, int depth, HashSet visitedUrls) {
         if (depth <= 0) return null;
-
+        if (visitedUrls.contains(url)) {  // ignore visited url across all pages.
+            return null;
+        }
         Page page = connect(url);
         if (page == null) return null;
         Elements elements = page.getElements();
         log.info("{} links on url : {}", elements.size(), url);
-        Supplier<Stream<Element>> elementsSupplier = () -> elements.stream();
+        Supplier<Stream<Element>> elementsSupplier = () -> elements.parallelStream();
         PageContext pageContext = new PageContext(url);
         pageContext.setTitle(page.getTitle());
 
@@ -170,8 +179,9 @@ public class CrawlServiceImpl implements CrawlService{
                 .filter(isDomainLink)
                 .map(element -> element.attr(ABOSOLUTE_HREF))
                 .forEach(link -> {
+                    log.debug(Thread.currentThread().getName()); // log thread name
                     pageContext.addDomainLinks(link);
-                    pageContext.addPageContext(visit(link, depth - 1));
+                    pageContext.addPageContext(visit(link, depth - 1, visitedUrls));
                 });
 
         return pageContext;
@@ -180,31 +190,29 @@ public class CrawlServiceImpl implements CrawlService{
 
     /**
      * @param url a url to visit
-     * @return  a Page for the url
+     * @return a Page for the url
      */
     private Page connect(String url) {
         if (StringUtils.isEmpty(url)) return null;
-
-        if (visitedUrls.add(url)) {
-            try {
-                Document doc = Jsoup.connect(url)
-                        .maxBodySize(propertyConfig.getMaxBodySize())
-                        .ignoreHttpErrors(true)
-                        .timeout(propertyConfig.getTimeout())
-                        .followRedirects(propertyConfig.getFollowRedirects())
-                        .get();
-                Elements hrefs = doc.select("a[href]");
-                return new Page(doc.title(), url, hrefs);
-            } catch (IOException | IllegalArgumentException e) {
-                return null;
-            }
-        } else
+        try {
+            Document doc = Jsoup.connect(url)
+                    .maxBodySize(propertyConfig.getMaxBodySize())
+                    .ignoreHttpErrors(true)
+                    .timeout(propertyConfig.getTimeout())
+                    .followRedirects(propertyConfig.getFollowRedirects())
+                    .get();
+            Elements hrefs = doc.select("a[href]");
+            return new Page(doc.title(), url, hrefs);
+        } catch (IOException | IllegalArgumentException e) {
             return null;
+        } catch ( Exception e){
+            return null;
+        }
     }
+
     /**
-     *
-     * @param url  http url
-     * @return  the host of url
+     * @param url http url
+     * @return the host of url
      */
     private static String getUrlDomain(String url) {
         URL aURL = null;

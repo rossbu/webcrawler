@@ -18,6 +18,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+<!--		<start-class>com.commontools.http.webcrawler.WebcrawlerApplication</start-class>-->
 	</properties>
 
 	<dependencies>
@@ -68,6 +69,22 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<image>
+						<name>rossbu/${project.artifactId}:v1</name>
+					</image>
+					<mainClass>com.commontools.http.webcrawler.WebcrawlerApplication</mainClass>
+					<layers>
+						<enabled>true</enabled>
+					</layers>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
