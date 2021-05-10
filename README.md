@@ -9,7 +9,7 @@
 - [Additional Notes](#additional-notes)
 - [Reference](#reference)
 
-## Prerequisite
+## Prerequisit
 1. If you haven't done it already, [make a fork of this repo](http://github.com/rossbu/webcrawler/fork).
 1. Clone to your local computer using `git`.
 1. Make sure you have `JDK 1.8` installed, see instructions [here](https://www.java.com/en/download/).
